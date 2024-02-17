@@ -1,11 +1,12 @@
 package com.example.interview.service.impl;
 
+import com.example.interview.model.dto.PostDTO;
 import com.example.interview.service.HttpClientService;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 public class HttpClientServiceImpl implements HttpClientService {
@@ -16,20 +17,18 @@ public class HttpClientServiceImpl implements HttpClientService {
     }
 
     @Override
-    public String get(String url) {
-        return restTemplate.getForObject(url, String.class);
+    public List<PostDTO> get(String url) {
+        return Arrays.asList(restTemplate.getForObject(url, PostDTO[].class));
     }
 
     @Override
-    public String post(String url, String body) {
-        return restTemplate.postForObject(url, body, String.class);
+    public PostDTO post(String url, PostDTO post) {
+        return restTemplate.postForObject(url, post, PostDTO.class);
     }
 
     @Override
-    public String put(String url, Object body) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Object> requestEntity = new HttpEntity<>(body, headers);
-        return restTemplate.exchange(url, HttpMethod.PUT, requestEntity, String.class).getBody();
+    public PostDTO put(String url, PostDTO body) {
+        restTemplate.put(url, body);
+        return body;
     }
 }

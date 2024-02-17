@@ -4,9 +4,9 @@ import com.example.interview.model.Response;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 public interface SimpleHttpClientService {
-    public Response get();
-    public Response post(Object body) throws JsonProcessingException;
-    public Response put(Object body) throws JsonProcessingException;
+    Response get();
+    Response post(Object body) throws JsonProcessingException;
+    Response put(Object body) throws JsonProcessingException;
 
 
 }
