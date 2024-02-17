@@ -2,7 +2,8 @@ package com.example.interview.controller;
 
 import com.example.interview.model.Response;
 import com.example.interview.model.dto.PostDTO;
-import com.example.interview.service.HttpClientService;
+import com.example.interview.model.dto.UpdateDTO;
+import com.example.interview.service.PostApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,17 +13,17 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class ApiController {
 
-    private final HttpClientService httpClient;
+    private final PostApiService postApiService;
 
     @Autowired
-    public ApiController(HttpClientService httpClient) {
-        this.httpClient = httpClient;
+    public ApiController(PostApiService httpClient) {
+        this.postApiService = httpClient;
     }
 
 
     @GetMapping("/data")
     public Response fetchData(){
-        var response = httpClient.get("https://jsonplaceholder.typicode.com/posts");
+        var response = postApiService.get();
         return new Response(0,
                 "the operation was successful",
                 response);
@@ -30,17 +31,15 @@ public class ApiController {
 
     @PostMapping("/data")
     public Response postData(@RequestBody PostDTO post) {
-        String url = "https://jsonplaceholder.typicode.com/posts";
-
-        var response = httpClient.post(url, post);
+        var response = postApiService.post(post);
         return new Response(0,
                 "the operation was successful",
                 response);
     }
 
-    @PutMapping("/data")
-    public Response updateData(@RequestBody PostDTO post){
-        var response = httpClient.put("https://jsonplaceholder.typicode.com/posts/1", post);
+    @PutMapping("/data/{id}")
+    public Response updateData(@RequestBody UpdateDTO post, @PathVariable Long id){
+        var response = postApiService.put(post, id);
         return new Response(0,
                 "the operation was successful",
                 response);

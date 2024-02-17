@@ -1,7 +1,7 @@
 package com.example.interview.controller;
 
 import com.example.interview.model.Response;
-import com.example.interview.service.SimpleHttpClientService;
+import com.example.interview.service.SimpleApiService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +9,9 @@ import java.util.Map;
 
 @RestController
 public class SimpleApiController {
-    private final SimpleHttpClientService service;
+    private final SimpleApiService service;
 
-    public SimpleApiController(SimpleHttpClientService service) {
+    public SimpleApiController(SimpleApiService service) {
         this.service = service;
     }
 
